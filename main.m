@@ -1,7 +1,42 @@
 close all; clear all; clc;
-
+rosshutdown();
 %% connect to the ROS network (if it is under a different IP, do not forget to add the IP)
 rosinit();
+
+%% Push button
+% hFig = figure('Name', 'Pause Script', 'NumberTitle', 'off');
+% pauseButton = uicontrol('Style', 'pushbutton', 'String', 'Pause', ...
+%                         'Position', [20, 20, 60, 30], 'Callback', @pauseButtonCallback);
+% resumeButton = uicontrol('Style', 'pushbutton', 'String', 'Resume', ...
+%                          'Position', [100, 20, 60, 30], 'Callback', @resumeButtonCallback);
+% 
+% Define the figure size
+figureWidth = 200;
+figureHeight = 100;
+
+% Create the figure
+hFig = figure('Name', 'Pause Script', 'NumberTitle', 'off', ...
+              'Position', [100, 100, figureWidth, figureHeight]);
+
+% Define button size and position
+buttonWidth = 60;
+buttonHeight = 30;
+padding = 20;
+
+% Position the Pause button
+pauseButton = uicontrol('Style', 'pushbutton', 'String', 'Pause', ...
+                        'Position', [padding, padding, buttonWidth, buttonHeight], ...
+                        'Callback', @pauseButtonCallback);
+
+% Position the Resume button
+resumeButton = uicontrol('Style', 'pushbutton', 'String', 'Resume', ...
+                         'Position', [padding*2 + buttonWidth, padding, buttonWidth, buttonHeight], ...
+                         'Callback', @resumeButtonCallback);
+
+% Initialize pause flag
+pauseFlag = false;
+assignin('base', 'pauseFlag', pauseFlag);
+
 
 %% create service client for take-off
 % clienttakeoff = rossvcclient("/takeoff","DataFormat","struct");
@@ -60,9 +95,25 @@ t0 = datetime('now');
 
 tf = datetime('now');
 
+disp("Start: ");
+disp(t0);
+
+disp("End: ");
+disp(tf);
+
 duration = tf - t0;
 disp("Duration: ");
 disp(duration);
 
+
 %% shutdown the connection with the ROS network
 rosshutdown();
+
+%% Callback functions
+function pauseButtonCallback(~, ~)
+    assignin('base', 'pauseFlag', true);
+end
+
+function resumeButtonCallback(~, ~)
+    assignin('base', 'pauseFlag', false);
+end

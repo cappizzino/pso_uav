@@ -5,7 +5,12 @@ function output = test_UAVcontroller(clienttakeoff, clientparams, subpose, param
     % for i=1:length(params)
     %     set(ptree,paramNames(i), params(i));
     % end
-    
+    %% Pause
+    % Check the pause flag
+    while evalin('base', 'pauseFlag')
+        pause(0.1);
+    end
+
     %% set parameters with ROS service
     % you will need to create the message first, taking the necessary
     % variables from the paramNames string array and related values from
