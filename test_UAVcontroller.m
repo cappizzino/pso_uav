@@ -19,14 +19,15 @@ function output = test_UAVcontroller(clienttakeoff, clientparams, subpose, param
     request_params = rosmessage(clientparams);
     response_params = call(clientparams,request_params,'Timeout',3);
     response_params = set_values(response_params, params(1), params(2),...
-        params(3), params(4), params(5));
+        params(3), params(4), params(5), params(6), params(7), params(8),...
+        params(9), params(10), params(11), params(12), params(13));
     response_params = call(clientparams,response_params,'Timeout',3);
 
     fprintf('kiwxy: %5.3f \n', response_params.Config.Doubles(1).Value);
     fprintf('kibxy: %5.3f \n', response_params.Config.Doubles(2).Value);
-    fprintf('kq_roll_pitch: %5.3f \n', response_params.Config.Doubles(5).Value);
-    fprintf('kq_yaw: %5.3f \n', response_params.Config.Doubles(6).Value);
-    fprintf('km: %5.3f \n', response_params.Config.Doubles(7).Value);
+%     fprintf('kq_roll_pitch: %5.3f \n', response_params.Config.Doubles(5).Value);
+%     fprintf('kq_yaw: %5.3f \n', response_params.Config.Doubles(6).Value);
+%     fprintf('km: %5.3f \n', response_params.Config.Doubles(7).Value);
 
     %% send command to take-off with ROS service
 %     clienttakeoffreq = rosmessage(clienttakeoff); % create an empty request message for take-off service
