@@ -169,7 +169,7 @@ while(nger<=N_GER)
         if(i==N)
             for j=1:N
                 fprintf('Second part: %d \n', j);
-                real_output_array = test_UAVcontroller(clienttakeoff, clientparams, subpose, paramNames, x(j,:));
+                real_output_array = test_UAVcontroller_se3(clienttakeoff, clientparams, subpose, paramNames, x(j,:));
                 desired_output_array = desired_output.*ones(size(real_output_array,1),1);
                 fit(j) = rmse(desired_output_array, real_output_array, 'all');
                 disp("****************************");

@@ -26,16 +26,26 @@ function output = test_UAVcontroller(clienttakeoff, clientparams, subpose, param
     % then you simply have to call the service (as done below)
     request_params = rosmessage(clientparams);
     response_params = call(clientparams,request_params,'Timeout',3);
-    response_params = set_values(response_params, params(1), params(2),...
+    response_params = set_values_se3(response_params, params(1), params(2),...
         params(3), params(4), params(5), params(6), params(7), params(8),...
-        params(9), params(10), params(11), params(12), params(13));
+        params(9), params(10), params(11));
     response_params = call(clientparams,response_params,'Timeout',3);
 
-    fprintf('kiwxy: %5.3f \n', response_params.Config.Doubles(1).Value);
-    fprintf('kibxy: %5.3f \n', response_params.Config.Doubles(2).Value);
-    fprintf('kq_roll_pitch: %5.3f \n', response_params.Config.Doubles(5).Value);
-    fprintf('kq_yaw: %5.3f \n', response_params.Config.Doubles(6).Value);
-    fprintf('km: %5.3f \n', response_params.Config.Doubles(15).Value);
+    disp("****************************");
+    fprintf('kpxy: %5.4f \n', response_params.Config.Doubles(1).Value);
+    fprintf('kvxy: %5.4f \n', response_params.Config.Doubles(2).Value);
+    fprintf('kaxy: %5.4f \n', response_params.Config.Doubles(3).Value);
+    fprintf('kiwxy: %5.4f \n', response_params.Config.Doubles(4).Value);
+    fprintf('kibxy: %5.4f \n', response_params.Config.Doubles(5).Value);
+    % fprintf('kiwxy_lim: %5.4f \n', response_params.Config.Doubles(6).Value);
+    % fprintf('kibxy_lim: %5.4f \n', response_params.Config.Doubles(7).Value);
+    fprintf('kpz: %5.4f \n', response_params.Config.Doubles(8).Value);
+    fprintf('kvz: %5.4f \n', response_params.Config.Doubles(9).Value);
+    fprintf('kaz: %5.4f \n', response_params.Config.Doubles(10).Value);
+    fprintf('kq_roll_pitch: %5.4f \n', response_params.Config.Doubles(11).Value);
+    fprintf('kq_yaw: %5.4f \n', response_params.Config.Doubles(12).Value);
+    fprintf('km: %5.4f \n', response_params.Config.Doubles(13).Value);
+    % fprintf('km_lim: %5.4f \n', response_params.Config.Doubles(14).Value);
 
     %% send command to take-off with ROS service
 %     clienttakeoffreq = rosmessage(clienttakeoff); % create an empty request message for take-off service
